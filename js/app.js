@@ -34,8 +34,12 @@ new Pic('img/usb.gif', 'usb', 0, 0);
 new Pic('img/water-can.jpg', 'water-can', 0, 0);
 new Pic('img/wine-glass.jpg', 'wine-glass', 0, 0);
 
+console.log (Pic.allPictures);
 
 // access element from DOM
+var imgElementOne = document.getElementById('pic-one');
+var imgElementTwo = document.getElementById('pic-two');
+var imgElementThree = document.getElementById('pic-three');
 
 // add event listener
 // end event listener after 25 clicks
@@ -52,6 +56,9 @@ new Pic('img/wine-glass.jpg', 'wine-glass', 0, 0);
 // track clicks
 
 // render 3 images on page load
+imgElementOne.src = Pic.allPictures[0].filepath;
+imgElementTwo.src = Pic.allPictures[1].filepath;
+imgElementThree.src = Pic.allPictures[2].filepath;
 
 // return img apperances after 25 selections
 // return img selction count after 25 loops
