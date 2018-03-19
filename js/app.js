@@ -13,6 +13,26 @@ function Pic(filepath, name, countShow, countClick) {
 }
 
 // new instances of pics
+new Pic('img/bag.jpg', 'bag', 0, 0);
+new Pic('img/banana.jpg', 'banana', 0, 0);
+new Pic('img/bathroom.jpg', 'bathroom', 0, 0);
+new Pic('img/boots.jpg', 'boots', 0, 0);
+new Pic('img/breakfast.jpg', 'breakfast', 0, 0);
+new Pic('img/bubblegum.jpg', 'bubblegum', 0, 0);
+new Pic('img/chair.jpg', 'chari', 0, 0);
+new Pic('img/cthulhu.jpg', 'cthulhu', 0, 0);
+new Pic('img/dog-duck.jpg', 'dog-duck', 0, 0);
+new Pic('img/dragon.jpg', 'dragon', 0, 0);
+new Pic('img/pen.jpg', 'pen', 0, 0);
+new Pic('img/pet-sweep.jpg', 'pet-sweep', 0, 0);
+new Pic('img/scissors.jpg', 'scissors', 0, 0);
+new Pic('img/shark.jpg', 'shark', 0, 0);
+new Pic('img/sweep.png', 'sweep', 0, 0);
+new Pic('img/tauntaun.jpg', 'tauntaun', 0, 0);
+new Pic('img/unicorn.jpg', 'unicorn', 0, 0);
+new Pic('img/usb.gif', 'usb', 0, 0);
+new Pic('img/water-can.jpg', 'water-can', 0, 0);
+new Pic('img/wine-glass.jpg', 'wine-glass', 0, 0);
 
 
 // access element from DOM
