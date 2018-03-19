@@ -42,23 +42,29 @@ var imgElementTwo = document.getElementById('pic-two');
 var imgElementThree = document.getElementById('pic-three');
 
 // add event listener
+imgElementOne.addEventListener('click', randomPic);
 // end event listener after 25 clicks
 
 //callback function when image is clicked, generate new pics
-// random number generator
-// check if random number is same as prior
-// use random numbers to set src and alt attributes of each pic
-// no duplicates
+function randomPic () {
+  // random number generator
+  var randomIndex = Math.floor(Math.random() * Pic.allPictures.length);
+  console.log (randomIndex);
+  // check if random number is same as prior
+  // use random numbers to set src and alt attributes of each pic
+  imgElementOne.src = Pic.allPictures[randomIndex].filepath;
+  imgElementTwo.src = Pic.allPictures[randomIndex].filepath;
+  imgElementThree.src = Pic.allPictures[randomIndex].filepath;
+  // no duplicates
 
+}
 
 // track image apperance
 
 // track clicks
 
 // render 3 images on page load
-imgElementOne.src = Pic.allPictures[0].filepath;
-imgElementTwo.src = Pic.allPictures[1].filepath;
-imgElementThree.src = Pic.allPictures[2].filepath;
+randomPic();
 
 // return img apperances after 25 selections
 // return img selction count after 25 loops
