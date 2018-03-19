@@ -43,23 +43,48 @@ var imgElementThree = document.getElementById('pic-three');
 
 // add event listener
 imgElementOne.addEventListener('click', randomPic);
+imgElementTwo.addEventListener('click', randomPic);
+imgElementThree.addEventListener('click', randomPic);
 // end event listener after 25 clicks
 
 //callback function when image is clicked, generate new pics
 function randomPic () {
   // random number generator
-  var randomIndex = Math.floor(Math.random() * Pic.allPictures.length);
-  console.log (randomIndex);
-  // check if random number is same as prior
-  // use random numbers to set src and alt attributes of each pic
-  imgElementOne.src = Pic.allPictures[randomIndex].filepath;
-  imgElementTwo.src = Pic.allPictures[randomIndex].filepath;
-  imgElementThree.src = Pic.allPictures[randomIndex].filepath;
-  // no duplicates
+  var randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
 
+  console.log ('index one: ' +randomIndexOne);
+
+  var randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
+  console.log ('index two: ' + randomIndexTwo);
+
+  var randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
+  console.log ('index three: ' + randomIndexThree);
+
+  // check if 2nd random number is equal to 1st
+
+  if (randomIndexTwo === randomIndexOne) {
+    randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
+    console.log ('index two 1st if: ' + randomIndexTwo);
+    randomIndexThree = parseInt(Math.floor(Math.random() * Pic.allPictures.length));
+    console.log ('index three 1st if: ' + randomIndexThree);
+  }
+
+  // check if 3rd random number is equal to 1st or 2nd
+  if (randomIndexThree === randomIndexOne || randomIndexThree === randomIndexTwo) {
+    randomIndexThree = parseInt(Math.floor(Math.random() * Pic.allPictures.length));
+    console.log ('index three 2nd if: ' + randomIndexThree);
+  }
+
+  // use random numbers to set src and alt attributes of each pic
+  imgElementOne.src = Pic.allPictures[randomIndexOne].filepath;
+  imgElementTwo.src = Pic.allPictures[randomIndexTwo].filepath;
+  imgElementThree.src = Pic.allPictures[randomIndexThree].filepath;
+
+
+  // no duplicates
 }
 
-// track image apperance
+// track image apperances
 
 // track clicks
 
