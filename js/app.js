@@ -46,6 +46,8 @@ var imgElementOne = document.getElementById('pic-one');
 var imgElementTwo = document.getElementById('pic-two');
 var imgElementThree = document.getElementById('pic-three');
 
+var unorderedListElement = document.getElementById('results');
+
 // add event listener
 
 imgElementOne.addEventListener('click', clickHandler);
@@ -55,6 +57,11 @@ imgElementThree.addEventListener('click', clickHandler);
 // end event listener after 25 clicks
 
 function clickHandler (event){
+
+  // count up one on total times allowed to click
+  Pic.totalPicCounter ++;
+  console.log('total pic counter: ' + Pic.totalPicCounter);
+
   switch (event.target.id) {
     case 'pic-one':
       Pic.currentPictures[0].countClick++;
@@ -70,7 +77,17 @@ function clickHandler (event){
   }
   console.log(Pic.currentPictures);
 
-  randomPic();
+  // check the click counter
+  if (Pic.totalPicCounter > 24) {
+    imgElementOne.removeEventListener('click', clickHandler);
+    imgElementTwo.removeEventListener('click', clickHandler);
+    imgElementThree.removeEventListener('click', clickHandler);
+
+    showResults();
+
+  } else {
+    randomPic();
+  }
 }
 
 //callback function when image is clicked, generate new pics
@@ -90,47 +107,21 @@ function randomPic () {
     || Pic.randomNumPrevious.includes(randomIndexTwo)
     || Pic.randomNumPrevious.includes(randomIndexThree))
   {
-    console.log('found dup');
+    console.log('found duplicate');
     randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
     randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
     randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
   }
 
-  console.log ('rand1: ' + randomIndexOne);
-  console.log ('rand 2: ' + randomIndexTwo);
-  console.log ('rand 3: ' + randomIndexThree);
+  // console.log ('rand1: ' + randomIndexOne);
+  // console.log ('rand 2: ' + randomIndexTwo);
+  // console.log ('rand 3: ' + randomIndexThree);
 
   Pic.currentRandomNum[0] = randomIndexOne;
   Pic.currentRandomNum[1] = randomIndexTwo;
   Pic.currentRandomNum[2] = randomIndexThree;
 
   console.log ('array of current rand num ' + Pic.currentRandomNum);
-
-  // // random number generator
-  // var randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
-  // var randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
-  // var randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
-
-  // // check if 2nd random number is equal to 1st
-  // while (randomIndexTwo === randomIndexOne ) {
-  //   randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
-
-  //   randomIndexThree = parseInt(Math.floor(Math.random() * Pic.allPictures.length));
-  // }
-
-  // // check if 3rd random number is equal to 1st or 2nd
-  // while (randomIndexThree === randomIndexOne || randomIndexThree === randomIndexTwo) {
-  //   randomIndexThree = parseInt(Math.floor(Math.random() * Pic.allPictures.length));
-  //}
-
-  //TODO: trying to make a 'current random doesn't equal last random'. Not working:
-  // while (Pic.currentRandomNum.includes(randomIndexOne) || Pic.currentRandomNum.includes(randomIndexTwo) || Pic.currentRandomNum.includes(randomIndexThree)) {
-  //   randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
-  //   randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
-  //   randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
-  // }
-
-
 
   Pic.currentPictures = [];
   Pic.currentPictures.push (Pic.allPictures[randomIndexOne],
@@ -154,13 +145,20 @@ function randomPic () {
   Pic.randomNumPrevious[1] = randomIndexTwo;
   Pic.randomNumPrevious[2] = randomIndexThree;
 
-  console.log('array to store num: ' + Pic.randomNumPrevious);
+  // console.log('array to store num: ' + Pic.randomNumPrevious);
+
 
 }
 
-Pic.totalPicCounter ++;
-console.log('total pic counter: ' + Pic.totalPicCounter);
-Pic.currentRandomNum = Pic.randomNumPrevious;
+function showResults() {
+  for (var i in Pic.allPictures) {
+    var listItemElement = document.createElement('li');
+
+    listItemElement.textContent = Pic.allPictures[i].name + ' received ' + Pic.allPictures[i].countClick + ' votes and was shown ' + Pic.allPictures[i].countShow + ' times.';
+
+    unorderedListElement.appendChild(listItemElement);
+  }
+}
 
 //   if (Pic.totalPicCounter === 5)
 //     return;
