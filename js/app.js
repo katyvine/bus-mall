@@ -8,6 +8,10 @@ Pic.randomNumPrevious = [];
 
 Pic.totalPicCounter = 0;
 
+// global arrays for chart
+var picNames = [];
+var picVotes = [];
+
 // constructor function for pictures
 function Pic(filepath, name) {
   this.filepath = filepath;
@@ -15,6 +19,7 @@ function Pic(filepath, name) {
   this.countShow = 0;
   this.countClick = 0;
   Pic.allPictures.push(this);
+  picNames.push(this.name);
 }
 
 // new instances of pics
@@ -76,12 +81,14 @@ function clickHandler (event){
   console.log(Pic.currentPictures);
 
   // check the click counter
-  if (Pic.totalPicCounter > 24) {
+  if (Pic.totalPicCounter > 4) {
     imgElementOne.removeEventListener('click', clickHandler);
     imgElementTwo.removeEventListener('click', clickHandler);
     imgElementThree.removeEventListener('click', clickHandler);
 
-    showResults();
+    countVotes();
+    renderChart();
+    // showResults();
   } else {
     randomPic();
   }
@@ -155,3 +162,39 @@ function showResults() {
 }
 // render 3 images on page load
 randomPic();
+
+// function to create vote array for bar chart
+function countVotes() {
+  for(var i in Pic.allPictures) {
+    picVotes[i] = Pic.allPictures[i].countClick;
+  }
+}
+
+// use Chart.js to create a bar chart
+function renderChart() {
+  // access canvas element from DOM
+  var context = document.getElementById('click-chart').getContext('2d');
+
+  var arrayOfColors = ['red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue'];
+
+  new Chart(context, {
+    type: 'bar',
+    data: {
+      labels: picNames,
+      datasets: [{
+        label: 'Votes per Picture',
+        data: picVotes,
+        backgroundColor: arrayOfColors,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
