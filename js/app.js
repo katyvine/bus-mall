@@ -175,7 +175,7 @@ function renderChart() {
   // access canvas element from DOM
   var context = document.getElementById('click-chart').getContext('2d');
 
-  var arrayOfColors = ['red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue','red', 'green', 'yellow', 'pink', 'blue'];
+  var arrayOfColors = ['#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153'];
 
   new Chart(context, {
     type: 'bar',
@@ -191,7 +191,9 @@ function renderChart() {
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            fontColor: '#c07b7b',
+            beginAtZero: true,
+            stepSize: 1,
           }
         }]
       }
