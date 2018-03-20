@@ -3,6 +3,7 @@
 
 Pic.allPictures = [];
 Pic.currentPictures = [];
+Pic.currentRandomNum = [];
 
 Pic.totalPicCounter = 0;
 
@@ -67,6 +68,7 @@ function clickHandler (event){
       return;
   }
   console.log(Pic.currentPictures);
+
   randomPic();
 }
 
@@ -90,6 +92,12 @@ function randomPic () {
     randomIndexThree = parseInt(Math.floor(Math.random() * Pic.allPictures.length));
   }
 
+  while (Pic.currentRandomNum.includes(randomIndexOne) || Pic.currentRandomNum.includes(randomIndexTwo) || Pic.currentRandomNum.includes(randomIndexThree)) {
+    randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
+    randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
+    randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
+  }
+
   Pic.currentPictures = [];
   Pic.currentPictures.push (Pic.allPictures[randomIndexOne],
     Pic.allPictures[randomIndexTwo],
@@ -105,15 +113,16 @@ function randomPic () {
   Pic.allPictures[randomIndexTwo].countShow ++;
   Pic.allPictures[randomIndexThree].countShow ++;
 
+  Pic.currentRandomNum[0] = randomIndexOne;
+  Pic.currentRandomNum[1] = randomIndexTwo;
+  Pic.currentRandomNum[2] = randomIndexThree;
+
   Pic.totalPicCounter ++;
   console.log('total pic counter: ' + Pic.totalPicCounter);
-
-
 }
 
 // render 3 images on page load
 randomPic();
-
 
 // return img apperances after 25 selections
 // return img selction count after 25 loops
