@@ -81,7 +81,7 @@ function clickHandler (event){
   console.log(Pic.currentPictures);
 
   // check the click counter
-  if (Pic.totalPicCounter > 4) {
+  if (Pic.totalPicCounter > 24) {
     imgElementOne.removeEventListener('click', clickHandler);
     imgElementTwo.removeEventListener('click', clickHandler);
     imgElementThree.removeEventListener('click', clickHandler);
