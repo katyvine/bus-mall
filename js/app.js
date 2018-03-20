@@ -49,13 +49,11 @@ var imgElementThree = document.getElementById('pic-three');
 var unorderedListElement = document.getElementById('results');
 
 // add event listener
-
 imgElementOne.addEventListener('click', clickHandler);
 imgElementTwo.addEventListener('click', clickHandler);
 imgElementThree.addEventListener('click', clickHandler);
 
 // end event listener after 25 clicks
-
 function clickHandler (event){
 
   // count up one on total times allowed to click
@@ -84,7 +82,6 @@ function clickHandler (event){
     imgElementThree.removeEventListener('click', clickHandler);
 
     showResults();
-
   } else {
     randomPic();
   }
@@ -94,7 +91,6 @@ function clickHandler (event){
 function randomPic () {
 
   //create array of random numbers to pass into picutre array position
-
   var randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
   var randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
   var randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
@@ -146,8 +142,6 @@ function randomPic () {
   Pic.randomNumPrevious[2] = randomIndexThree;
 
   // console.log('array to store num: ' + Pic.randomNumPrevious);
-
-
 }
 
 function showResults() {
@@ -159,15 +153,5 @@ function showResults() {
     unorderedListElement.appendChild(listItemElement);
   }
 }
-
-//   if (Pic.totalPicCounter === 5)
-//     return;
-// }
-
-// Trying to end loop after x amount of clicks: not working
-// function endTrial() {
-
-
 // render 3 images on page load
 randomPic();
-// endTrial();
