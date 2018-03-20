@@ -4,6 +4,7 @@
 Pic.allPictures = [];
 Pic.currentPictures = [];
 Pic.currentRandomNum = [];
+// Pic.randomNumPrevious = [];
 
 Pic.totalPicCounter = 0;
 
@@ -75,13 +76,39 @@ function clickHandler (event){
 //callback function when image is clicked, generate new pics
 function randomPic () {
 
+  //This code isn't working...
+  //create array of random numbers to pass into picutre array position
+
+  // var i = 0;
+  // Pic.currentRandomNum = [];
+
+  // for (i = 0; i < 3; i++){
+
+  //   var randomNumber = Math.floor(Math.random() * Pic.allPictures.length);
+  //   // Pic.currentRandomNum.push(randomNumber);
+
+  //   while (Pic.currentRandomNum[0] === Pic.currentRandomNum[1]
+  //   || Pic.currentRandomNum[0] === Pic.currentRandomNum [2]
+  //   || Pic.currentRandomNum[1] === Pic.currentRandomNum [2]
+  //   || Pic.currentRandomNum.includes(Pic.randomNumPrevious)) {
+  //     randomNumber = Math.floor(Math.random() * Pic.allPictures.length);
+  //     // Pic.currentRandomNum.push (randomNumber);
+  //   }
+  //   Pic.currentRandomNum.push(randomNumber);
+
+  //   console.log('array 1: ' + Pic.currentRandomNum);
+  //   console.log('array 2: ' + Pic.randomNumPrevious);
+  // }
+
+
+
   // random number generator
   var randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
   var randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
   var randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
 
   // check if 2nd random number is equal to 1st
-  while (randomIndexTwo === randomIndexOne) {
+  while (randomIndexTwo === randomIndexOne ) {
     randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
 
     randomIndexThree = parseInt(Math.floor(Math.random() * Pic.allPictures.length));
@@ -92,16 +119,23 @@ function randomPic () {
     randomIndexThree = parseInt(Math.floor(Math.random() * Pic.allPictures.length));
   }
 
-  while (Pic.currentRandomNum.includes(randomIndexOne) || Pic.currentRandomNum.includes(randomIndexTwo) || Pic.currentRandomNum.includes(randomIndexThree)) {
-    randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
-    randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
-    randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
-  }
+  //TODO: trying to make a 'current random doesn't equal last random'. Not working:
+  // while (Pic.currentRandomNum.includes(randomIndexOne) || Pic.currentRandomNum.includes(randomIndexTwo) || Pic.currentRandomNum.includes(randomIndexThree)) {
+  //   randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
+  //   randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
+  //   randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
+  // }
+
+  // Pic.currentRandomNum[0] = randomIndexOne;
+  // Pic.currentRandomNum[1] = randomIndexTwo;
+  // Pic.currentRandomNum[2] = randomIndexThree;
 
   Pic.currentPictures = [];
   Pic.currentPictures.push (Pic.allPictures[randomIndexOne],
     Pic.allPictures[randomIndexTwo],
     Pic.allPictures[randomIndexThree]);
+
+  console.log ('current array: ' + Pic.currentPictures);
 
   // use random numbers to set src and alt attributes of each pic
   imgElementOne.src = Pic.allPictures[randomIndexOne].filepath;
@@ -113,16 +147,20 @@ function randomPic () {
   Pic.allPictures[randomIndexTwo].countShow ++;
   Pic.allPictures[randomIndexThree].countShow ++;
 
-  Pic.currentRandomNum[0] = randomIndexOne;
-  Pic.currentRandomNum[1] = randomIndexTwo;
-  Pic.currentRandomNum[2] = randomIndexThree;
+
 
   Pic.totalPicCounter ++;
   console.log('total pic counter: ' + Pic.totalPicCounter);
+  Pic.currentRandomNum = Pic.randomNumPrevious;
+
+  if (Pic.totalPicCounter === 5)
+    return;
 }
+
+// Trying to end loop after x amount of clicks: not working
+// function endTrial() {
+
 
 // render 3 images on page load
 randomPic();
-
-// return img apperances after 25 selections
-// return img selction count after 25 loops
+// endTrial();
