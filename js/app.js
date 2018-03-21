@@ -23,28 +23,36 @@ function Pic(filepath, name) {
 }
 
 // new instances of pics
-new Pic('img/bag.jpg', 'bag');
-new Pic('img/banana.jpg', 'banana');
-new Pic('img/bathroom.jpg', 'bathroom');
-new Pic('img/boots.jpg', 'boots');
-new Pic('img/breakfast.jpg', 'breakfast');
-new Pic('img/bubblegum.jpg', 'bubblegum');
-new Pic('img/chair.jpg', 'chari');
-new Pic('img/cthulhu.jpg', 'cthulhu');
-new Pic('img/dog-duck.jpg', 'dog-duck');
-new Pic('img/dragon.jpg', 'dragon');
-new Pic('img/pen.jpg', 'pen');
-new Pic('img/pet-sweep.jpg', 'pet-sweep');
-new Pic('img/scissors.jpg', 'scissors');
-new Pic('img/shark.jpg', 'shark');
-new Pic('img/sweep.png', 'sweep');
-new Pic('img/tauntaun.jpg', 'tauntaun');
-new Pic('img/unicorn.jpg', 'unicorn');
-new Pic('img/usb.gif', 'usb');
-new Pic('img/water-can.jpg', 'water-can');
-new Pic('img/wine-glass.jpg', 'wine-glass');
+// create function for creating new instances
+function createNewInstances() {
 
-console.log (Pic.allPictures);
+  // if function to check for useable array in local storage
+
+  new Pic('img/bag.jpg', 'bag');
+  new Pic('img/banana.jpg', 'banana');
+  new Pic('img/bathroom.jpg', 'bathroom');
+  new Pic('img/boots.jpg', 'boots');
+  new Pic('img/breakfast.jpg', 'breakfast');
+  new Pic('img/bubblegum.jpg', 'bubblegum');
+  new Pic('img/chair.jpg', 'chari');
+  new Pic('img/cthulhu.jpg', 'cthulhu');
+  new Pic('img/dog-duck.jpg', 'dog-duck');
+  new Pic('img/dragon.jpg', 'dragon');
+  new Pic('img/pen.jpg', 'pen');
+  new Pic('img/pet-sweep.jpg', 'pet-sweep');
+  new Pic('img/scissors.jpg', 'scissors');
+  new Pic('img/shark.jpg', 'shark');
+  new Pic('img/sweep.png', 'sweep');
+  new Pic('img/tauntaun.jpg', 'tauntaun');
+  new Pic('img/unicorn.jpg', 'unicorn');
+  new Pic('img/usb.gif', 'usb');
+  new Pic('img/water-can.jpg', 'water-can');
+  new Pic('img/wine-glass.jpg', 'wine-glass');
+
+  console.log (Pic.allPictures);
+}
+
+createNewInstances();
 
 // access element from DOM
 var imgElementOne = document.getElementById('pic-one');
@@ -82,6 +90,9 @@ function clickHandler (event){
 
   // check the click counter
   if (Pic.totalPicCounter > 24) {
+    // TODO save to local storage here
+    // var savePicInfo = JSON.stringify(Pic.allPictures);
+
     imgElementOne.removeEventListener('click', clickHandler);
     imgElementTwo.removeEventListener('click', clickHandler);
     imgElementThree.removeEventListener('click', clickHandler);
