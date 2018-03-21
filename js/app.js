@@ -194,8 +194,25 @@ function renderChart() {
             fontColor: '#c07b7b',
             beginAtZero: true,
             stepSize: 1,
+          },
+          scaleLabel: {display: true,
+            labelString: 'Times Clicked',}
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false,
           }
         }]
+      },
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: 'User Responses',
+        fontColor: '#c67151',
+        fontSize: 18,
+        fontStyle: 'bold',
       }
     }
   });
