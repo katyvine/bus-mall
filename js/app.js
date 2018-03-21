@@ -10,6 +10,7 @@ Pic.totalPicCounter = 0;
 
 // global arrays for chart
 var picNames = [];
+var picShow = [];
 var picVotes = [];
 
 // constructor function for pictures
@@ -102,7 +103,7 @@ function clickHandler (event){
   // console.log(Pic.currentPictures);
 
   // check the click counter
-  if (Pic.totalPicCounter > 24) {
+  if (Pic.totalPicCounter > 4) {
 
     // Save to local storage
     var savePicInfo = JSON.stringify(Pic.allPictures);
@@ -113,6 +114,7 @@ function clickHandler (event){
     imgElementTwo.removeEventListener('click', clickHandler);
     imgElementThree.removeEventListener('click', clickHandler);
 
+    countTimesShown();
     countVotes();
     renderChart();
     // showResults();
@@ -191,6 +193,13 @@ function showResults() {
 // render 3 images on page load
 randomPic();
 
+// function to create times picture shown array for bar chart
+function countTimesShown() {
+  for (var j in Pic.allPictures) {
+    picShow[j] = Pic.allPictures[j].countShow;
+  }
+}
+
 // function to create vote array for bar chart
 function countVotes() {
   for(var k in Pic.allPictures) {
@@ -205,6 +214,8 @@ function renderChart() {
 
   var arrayOfColors = ['#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153'];
 
+  var arrayOfColorsMuted = ['#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb','#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb','#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb','#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb',];
+
   new Chart(context, {
     type: 'bar',
     data: {
@@ -213,20 +224,27 @@ function renderChart() {
         label: 'Votes per Picture',
         data: picVotes,
         backgroundColor: arrayOfColors,
+      },
+      {
+        label: 'Times Picture Shown',
+        data: picShow,
+        backgroundColor: arrayOfColorsMuted,
       }]
     },
     options: {
       scales: {
         yAxes: [{
+          stacked: false,
           ticks: {
             fontColor: '#c07b7b',
             beginAtZero: true,
             stepSize: 1,
           },
           scaleLabel: {display: true,
-            labelString: 'Times Clicked',}
+            labelString: 'Times Clicked vs. Times Shown',}
         }],
         xAxes: [{
+          stacked: true,
           ticks: {
             autoSkip: false,
           }
@@ -244,4 +262,20 @@ function renderChart() {
       }
     }
   });
+
+  // // stacked chart
+  // new Chart(context, {
+  //   type: 'bar',
+  //   data: picShow,
+  //   options: {
+  //     scales: {
+  //       xAxes: [{
+  //         stacked: true
+  //       }],
+  //       yAxes: [{
+  //         stacked: true
+  //       }]
+  //     }
+  //   }
+  // });
 }
