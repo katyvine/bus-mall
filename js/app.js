@@ -22,19 +22,13 @@ function Pic(filepath, name) {
   picNames.push(this.name);
 }
 
-// Pic.allPictures = [];
-
-// new instances of pics
-// create function for creating new instances
-
-// global to access for click counter
-var picStorageString = localStorage.getItem('localPictures');
-var retrievedPics = JSON.parse(picStorageString);
-
+// function for creating new instances
 function createNewInstances() {
 
-  // if function to check for useable array in local storage
+  var picStorageString = localStorage.getItem('localPictures');
+  var retrievedPics = JSON.parse(picStorageString);
 
+  // use if function to check for data in local storage
   if (retrievedPics && retrievedPics.length) {
     Pic.allPictures = retrievedPics;
     console.log('retrieved pic data from LS');
@@ -42,7 +36,6 @@ function createNewInstances() {
     for(var i in Pic.allPictures) {
       picNames[i] = Pic.allPictures[i].name;
     }
-    console.log('pic name array: ' + picNames);
     return;
   }
 
@@ -109,7 +102,7 @@ function clickHandler (event){
   // console.log(Pic.currentPictures);
 
   // check the click counter
-  if (Pic.totalPicCounter > 4) {
+  if (Pic.totalPicCounter > 24) {
 
     // Save to local storage
     var savePicInfo = JSON.stringify(Pic.allPictures);
@@ -194,10 +187,9 @@ function showResults() {
     unorderedListElement.appendChild(listItemElement);
   }
 }
+
 // render 3 images on page load
 randomPic();
-
-// createNewInstances();
 
 // function to create vote array for bar chart
 function countVotes() {
