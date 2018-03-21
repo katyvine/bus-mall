@@ -8,6 +8,10 @@ Pic.randomNumPrevious = [];
 
 Pic.totalPicCounter = 0;
 
+// global arrays for chart
+var picNames = [];
+var picVotes = [];
+
 // constructor function for pictures
 function Pic(filepath, name) {
   this.filepath = filepath;
@@ -15,31 +19,40 @@ function Pic(filepath, name) {
   this.countShow = 0;
   this.countClick = 0;
   Pic.allPictures.push(this);
+  picNames.push(this.name);
 }
 
 // new instances of pics
-new Pic('img/bag.jpg', 'bag');
-new Pic('img/banana.jpg', 'banana');
-new Pic('img/bathroom.jpg', 'bathroom');
-new Pic('img/boots.jpg', 'boots');
-new Pic('img/breakfast.jpg', 'breakfast');
-new Pic('img/bubblegum.jpg', 'bubblegum');
-new Pic('img/chair.jpg', 'chari');
-new Pic('img/cthulhu.jpg', 'cthulhu');
-new Pic('img/dog-duck.jpg', 'dog-duck');
-new Pic('img/dragon.jpg', 'dragon');
-new Pic('img/pen.jpg', 'pen');
-new Pic('img/pet-sweep.jpg', 'pet-sweep');
-new Pic('img/scissors.jpg', 'scissors');
-new Pic('img/shark.jpg', 'shark');
-new Pic('img/sweep.png', 'sweep');
-new Pic('img/tauntaun.jpg', 'tauntaun');
-new Pic('img/unicorn.jpg', 'unicorn');
-new Pic('img/usb.gif', 'usb');
-new Pic('img/water-can.jpg', 'water-can');
-new Pic('img/wine-glass.jpg', 'wine-glass');
+// create function for creating new instances
+function createNewInstances() {
 
-console.log (Pic.allPictures);
+  // if function to check for useable array in local storage
+
+  new Pic('img/bag.jpg', 'bag');
+  new Pic('img/banana.jpg', 'banana');
+  new Pic('img/bathroom.jpg', 'bathroom');
+  new Pic('img/boots.jpg', 'boots');
+  new Pic('img/breakfast.jpg', 'breakfast');
+  new Pic('img/bubblegum.jpg', 'bubblegum');
+  new Pic('img/chair.jpg', 'chari');
+  new Pic('img/cthulhu.jpg', 'cthulhu');
+  new Pic('img/dog-duck.jpg', 'dog-duck');
+  new Pic('img/dragon.jpg', 'dragon');
+  new Pic('img/pen.jpg', 'pen');
+  new Pic('img/pet-sweep.jpg', 'pet-sweep');
+  new Pic('img/scissors.jpg', 'scissors');
+  new Pic('img/shark.jpg', 'shark');
+  new Pic('img/sweep.png', 'sweep');
+  new Pic('img/tauntaun.jpg', 'tauntaun');
+  new Pic('img/unicorn.jpg', 'unicorn');
+  new Pic('img/usb.gif', 'usb');
+  new Pic('img/water-can.jpg', 'water-can');
+  new Pic('img/wine-glass.jpg', 'wine-glass');
+
+  console.log (Pic.allPictures);
+}
+
+createNewInstances();
 
 // access element from DOM
 var imgElementOne = document.getElementById('pic-one');
@@ -77,11 +90,16 @@ function clickHandler (event){
 
   // check the click counter
   if (Pic.totalPicCounter > 24) {
+    // TODO save to local storage here
+    // var savePicInfo = JSON.stringify(Pic.allPictures);
+
     imgElementOne.removeEventListener('click', clickHandler);
     imgElementTwo.removeEventListener('click', clickHandler);
     imgElementThree.removeEventListener('click', clickHandler);
 
-    showResults();
+    countVotes();
+    renderChart();
+    // showResults();
   } else {
     randomPic();
   }
@@ -155,3 +173,58 @@ function showResults() {
 }
 // render 3 images on page load
 randomPic();
+
+// function to create vote array for bar chart
+function countVotes() {
+  for(var i in Pic.allPictures) {
+    picVotes[i] = Pic.allPictures[i].countClick;
+  }
+}
+
+// use Chart.js to create a bar chart
+function renderChart() {
+  // access canvas element from DOM
+  var context = document.getElementById('click-chart').getContext('2d');
+
+  var arrayOfColors = ['#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153'];
+
+  new Chart(context, {
+    type: 'bar',
+    data: {
+      labels: picNames,
+      datasets: [{
+        label: 'Votes per Picture',
+        data: picVotes,
+        backgroundColor: arrayOfColors,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            fontColor: '#c07b7b',
+            beginAtZero: true,
+            stepSize: 1,
+          },
+          scaleLabel: {display: true,
+            labelString: 'Times Clicked',}
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false,
+          }
+        }]
+      },
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: 'User Responses',
+        fontColor: '#c67151',
+        fontSize: 18,
+        fontStyle: 'bold',
+      }
+    }
+  });
+}

@@ -1,4 +1,36 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 5% 10%;
+  background: #d2dcdc;
+}
+
+body h1 {
+  font-size: 28px;
+  color:#205153;
+}
+
+body h2 {
+  font-size: 20px;
+  color: #c07b7b
+}
+
+body h3 {
+  font-size: 16px;
+  color:#c67151;
+}
+
 body img{
-  width: 100px;
+  height: 150px; 
+  padding: 1em;
+  margin: .5em;
+  background: gray;
+}
+
+canvas {
+  width: 100%;
   
+}
+#click-chart {
+  background: #f1f1f1;
+  border: 2px solid lightgray;
 }
