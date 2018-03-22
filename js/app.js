@@ -103,7 +103,7 @@ function clickHandler (event){
   // console.log(Pic.currentPictures);
 
   // check the click counter
-  if (Pic.totalPicCounter > 4) {
+  if (Pic.totalPicCounter > 24) {
 
     // Save to local storage
     var savePicInfo = JSON.stringify(Pic.allPictures);
