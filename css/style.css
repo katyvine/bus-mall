@@ -1,17 +1,24 @@
+.heading img {
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 5% 10%;
-  background: #d2dcdc;
+  background: rgb(212, 212, 212);
 }
 
 body h1 {
   font-size: 28px;
   color:#205153;
+  padding: 25px 0 0 0;
 }
 
 body h2 {
   font-size: 20px;
-  color: #c07b7b
+  color: #b05858;
 }
 
 body h3 {
@@ -23,7 +30,13 @@ body img{
   height: 150px; 
   padding: 1em;
   margin: .5em;
-  background: gray;
+  background: #0b5a8a;
+}
+
+#pics img:hover {
+  background: #532220;
+  cursor: pointer;
+  transition: background .2s;
 }
 
 canvas {

@@ -10,6 +10,7 @@ Pic.totalPicCounter = 0;
 
 // global arrays for chart
 var picNames = [];
+var picShow = [];
 var picVotes = [];
 
 // constructor function for pictures
@@ -22,11 +23,24 @@ function Pic(filepath, name) {
   picNames.push(this.name);
 }
 
-// new instances of pics
-// create function for creating new instances
+// function for creating new instances
 function createNewInstances() {
 
-  // if function to check for useable array in local storage
+  var picStorageString = localStorage.getItem('localPictures');
+  var retrievedPics = JSON.parse(picStorageString);
+
+  // use if function to check for data in local storage
+  if (retrievedPics && retrievedPics.length) {
+    Pic.allPictures = retrievedPics;
+    console.log('retrieved pic data from LS');
+    console.log (Pic.allPictures);
+    for(var i in Pic.allPictures) {
+      picNames[i] = Pic.allPictures[i].name;
+    }
+    return;
+  }
+
+  console.log('creating new instances');
 
   new Pic('img/bag.jpg', 'bag');
   new Pic('img/banana.jpg', 'banana');
@@ -71,7 +85,7 @@ function clickHandler (event){
 
   // count up one on total times allowed to click
   Pic.totalPicCounter ++;
-  console.log('total pic counter: ' + Pic.totalPicCounter);
+  // console.log('total pic counter: ' + Pic.totalPicCounter);
 
   switch (event.target.id) {
     case 'pic-one':
@@ -86,17 +100,21 @@ function clickHandler (event){
     default:
       return;
   }
-  console.log(Pic.currentPictures);
+  // console.log(Pic.currentPictures);
 
   // check the click counter
   if (Pic.totalPicCounter > 24) {
-    // TODO save to local storage here
-    // var savePicInfo = JSON.stringify(Pic.allPictures);
 
+    // Save to local storage
+    var savePicInfo = JSON.stringify(Pic.allPictures);
+    localStorage.setItem('localPictures', savePicInfo);
+
+    // Turn off event listener
     imgElementOne.removeEventListener('click', clickHandler);
     imgElementTwo.removeEventListener('click', clickHandler);
     imgElementThree.removeEventListener('click', clickHandler);
 
+    countTimesShown();
     countVotes();
     renderChart();
     // showResults();
@@ -121,7 +139,7 @@ function randomPic () {
     || Pic.randomNumPrevious.includes(randomIndexTwo)
     || Pic.randomNumPrevious.includes(randomIndexThree))
   {
-    console.log('found duplicate');
+    // console.log('found duplicate');
     randomIndexOne = Math.floor(Math.random() * Pic.allPictures.length);
     randomIndexTwo = Math.floor(Math.random() * Pic.allPictures.length);
     randomIndexThree = Math.floor(Math.random() * Pic.allPictures.length);
@@ -135,7 +153,7 @@ function randomPic () {
   Pic.currentRandomNum[1] = randomIndexTwo;
   Pic.currentRandomNum[2] = randomIndexThree;
 
-  console.log ('array of current rand num ' + Pic.currentRandomNum);
+  // console.log ('array of current rand num ' + Pic.currentRandomNum);
 
   Pic.currentPictures = [];
   Pic.currentPictures.push (Pic.allPictures[randomIndexOne],
@@ -171,13 +189,21 @@ function showResults() {
     unorderedListElement.appendChild(listItemElement);
   }
 }
+
 // render 3 images on page load
 randomPic();
 
+// function to create times picture shown array for bar chart
+function countTimesShown() {
+  for (var j in Pic.allPictures) {
+    picShow[j] = Pic.allPictures[j].countShow;
+  }
+}
+
 // function to create vote array for bar chart
 function countVotes() {
-  for(var i in Pic.allPictures) {
-    picVotes[i] = Pic.allPictures[i].countClick;
+  for(var k in Pic.allPictures) {
+    picVotes[k] = Pic.allPictures[k].countClick;
   }
 }
 
@@ -188,6 +214,8 @@ function renderChart() {
 
   var arrayOfColors = ['#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153','#c07b7b', '#59ac7c', '#0b5a8a', '#c67151', '#205153'];
 
+  var arrayOfColorsMuted = ['#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb','#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb','#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb','#ecd7d7', '#cde6d7', '#b5cddb', '#edd4ca', '#bccacb',];
+
   new Chart(context, {
     type: 'bar',
     data: {
@@ -196,20 +224,27 @@ function renderChart() {
         label: 'Votes per Picture',
         data: picVotes,
         backgroundColor: arrayOfColors,
+      },
+      {
+        label: 'Times Picture Shown',
+        data: picShow,
+        backgroundColor: arrayOfColorsMuted,
       }]
     },
     options: {
       scales: {
         yAxes: [{
+          stacked: false,
           ticks: {
             fontColor: '#c07b7b',
             beginAtZero: true,
             stepSize: 1,
           },
           scaleLabel: {display: true,
-            labelString: 'Times Clicked',}
+            labelString: 'Times Clicked vs. Times Shown',}
         }],
         xAxes: [{
+          stacked: true,
           ticks: {
             autoSkip: false,
           }
@@ -227,4 +262,20 @@ function renderChart() {
       }
     }
   });
+
+  // // stacked chart
+  // new Chart(context, {
+  //   type: 'bar',
+  //   data: picShow,
+  //   options: {
+  //     scales: {
+  //       xAxes: [{
+  //         stacked: true
+  //       }],
+  //       yAxes: [{
+  //         stacked: true
+  //       }]
+  //     }
+  //   }
+  // });
 }
